@@ -1,25 +1,21 @@
 import unittest
-import urllib.request
-
+from selenium import webdriver
 class WebsiteLoadingTest(unittest.TestCase):
-    def test_website_loading(self):
-        url = "https://atg.world"
+    def setUp(self):
+        # Set up the Selenium webdriver
+        self.driver = webdriver.Firefox()
 
-        try:
-            response = urllib.request.urlopen(url)
-            status_code = response.getcode()
-            
-            # Print a log statement indicating the status code
-            print(f"Status code: {status_code}")
+    def tearDown(self):
+        # Quit the Selenium webdriver
+        self.driver.quit()
+def test_website_loading(self):
+    # Load the atg.world website
+    self.driver.get("https://www.atg.world")
 
-            # Check if the website loads successfully (status code 200)
-            self.assertEqual(status_code, 200, "Website failed to load properly")
-
-        except Exception as e:
-            # Print the exception if the website fails to load
-            print(f"Exception occurred: {e}")
-            self.fail("Website failed to load")
-
+    # Verify if the website title is correct
+    expected_title = "ATG - Explore a new reality"
+    actual_title = self.driver.title
+    self.assertEqual(actual_title, expected_title)
 if __name__ == '__main__':
     unittest.main()
 
